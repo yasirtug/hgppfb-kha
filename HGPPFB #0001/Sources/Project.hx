@@ -5,6 +5,8 @@ import kha.Scheduler;
 import kha.System;
 import kha.graphics2.Graphics;
 
+//This code is written by yasirtug in inspiration of tarik kaya's hgppfb 0001
+
 typedef Rectangle={
 	centerX:Float,
 	centerY:Float,
