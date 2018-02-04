@@ -1,3 +1,3 @@
-let project = new Project("HGPPFB0001");
+let project = new Project("HGPPFB0002");
 project.addSources('Sources');
 resolve(project);
