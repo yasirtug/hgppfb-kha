@@ -1,4 +1,3 @@
-let project = new Project('New Project');
-project.addAssets('Assets/**');
+let project = new Project("HGPPFB0003");
 project.addSources('Sources');
 resolve(project);
