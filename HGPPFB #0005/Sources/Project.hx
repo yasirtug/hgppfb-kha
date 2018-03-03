@@ -30,8 +30,8 @@ class Project {
 		System.notifyOnRender(render);
 		Scheduler.addTimeTask(update, 0, 1/60);
 		bodies = new Array<Body>();
-		var body0:Body=new Body(100, 20, 100, 1);
-		var body1:Body=new Body(300, 20, -100, 1);
+		var body0:Body = new Body(100, 20, 100, 1);
+		var body1:Body = new Body(300, 20, -100, 1);
 		bodies.push(body0);
 		bodies.push(body1);
 	}
@@ -75,7 +75,7 @@ class Project {
 						var desiredDv = -BOUNCINESS * dv;
 						var desiredDvChange = desiredDv - dv;
 						//i modified below as more intuitive to me
-						var imp=desiredDvChange / totalInvertMass;
+						var imp = desiredDvChange / totalInvertMass;
 						a.ApplyImpulse(-imp);
 						b.ApplyImpulse(imp);
 
