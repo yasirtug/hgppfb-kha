@@ -25,16 +25,14 @@ class Vec2{
 		return c;
 	}
 	public static function pro(a:Vec2, b:Float):Vec2{
-		var c:Vec2 = new Vec2();
 		a.x *= b;
 		a.y *= b;
-		return c;
+		return a;
 	}
 	public static function div(a:Vec2, b:Float):Vec2{
-		var c:Vec2 = new Vec2();
 		a.x /= b;
 		a.y /= b;
-		return c;
+		return a;
 	}
 	public function len2():Float{
 		return x*x + y*y;
