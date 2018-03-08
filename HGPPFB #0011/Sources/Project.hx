@@ -37,6 +37,11 @@ class Vec2{
 		c.y = a.y / b;
 		return c;
 	}
+
+	public static function dotP(a:Vec2, b:Vec2):Float{
+		return a.x * b.x + a.y * b.y;
+	}
+
 	public function len2():Float{
 		return x*x + y*y;
 	}
@@ -80,7 +85,7 @@ class Project {
 		System.notifyOnRender(render);
 		Scheduler.addTimeTask(update, 0, 1/60);
 		bodies = new Array<Body>();
-		for(i in 0...10){
+		for(i in 0...100){
 			var body:Body = new Body(
 				new Vec2(Std.random(400), Std.random(400)),
 				Std.random(40) + 1,
@@ -100,49 +105,43 @@ class Project {
 		for (body in bodies){ //movement
 			body.center = Vec2.sum(body.center, Vec2.pro(body.vel, dt));
 		}
-		// for (i in 0...bodies.length){ //collision
-		// var a = bodies[i];
-		// 	for (k in (i+1)...bodies.length)
-		// 	{
-		// 		var b = bodies[k];
-		// 		var dp = b.center - a.center;//delta position
-		// 		var totalSize = a.size + b.size;
-		// 		var collided = Math.abs(dp) < (totalSize) / 2;
-		// 		if(collided){
-		// 			var dv = b.vel - a.vel;
-		// 			var movingTowardsEachOther = dv * dp < 0;
-		// 			if(movingTowardsEachOther){
-		// 				var totalInvertMass=a.invertMass + b.invertMass;
-		// 				var invMassRatioA = a.invertMass / totalInvertMass;
-		// 				var invMassRatioB = b.invertMass / totalInvertMass;
+		for (i in 0...bodies.length){ //collision
+		var a = bodies[i];
+			for (k in (i+1)...bodies.length)
+			{
+				var b = bodies[k];
+				var dp = Vec2.sub(b.center, a.center);//delta position
+				var totSize:Float = a.r + b.r;
+				var collided = dp.len2() < (totSize * totSize);
+				if(collided){
+					var dv = Vec2.sub(b.vel, a.vel);
+					var movingTowardsEachOther = Vec2.dotP(dv, dp) < 0;
+					if(movingTowardsEachOther){
+						a.center.x=1000;
+						b.center.x=1000;
+						// var totalInvertMass=a.invertMass + b.invertMass;
+						// var invMassRatioA = a.invertMass / totalInvertMass;
+						// var invMassRatioB = b.invertMass / totalInvertMass;
 
-		// 				//eliminate overlapping
-		// 				var totalOverlap = totalSize/2-Math.abs(dp);
-		// 				b.center += totalOverlap * invMassRatioB * (dp / Math.abs(dp));
-		// 				a.center -= totalOverlap * invMassRatioA * (dp / Math.abs(dp));
+						// //eliminate overlapping
+						// var totalOverlap = totalSize/2-Math.abs(dp);
+						// b.center += totalOverlap * invMassRatioB * (dp / Math.abs(dp));
+						// a.center -= totalOverlap * invMassRatioA * (dp / Math.abs(dp));
 
-		// 				// bounce
-		// 				var BOUNCINESS = 1;//system conserves energy
-		// 				//var BOUNCINESS = 1.04; //system is gaining energy exponentially
-		// 				//var BOUNCINESS = 0.96; //system is losing energy exponentially
-		// 				var desiredDv = -BOUNCINESS * dv;
-		// 				var desiredDvChange = desiredDv - dv;
-		// 				//i modified below as more intuitive to me
-		// 				var imp = desiredDvChange / totalInvertMass;
-		// 				a.ApplyImpulse(-imp);
-		// 				b.ApplyImpulse(imp);
-
-		// 				//algebraic method
-		// 				//var va = a.vel;
-		// 				//var vb = b.vel;
-		// 				//a.vel = -a.invertMass * va + 2.0 * a.invertMass * vb + b.invertMass * va;
-		// 				//a.vel /= totalInvertMass;
-		// 				//b.vel = -b.invertMass * vb + 2.0 * b.invertMass * va + a.invertMass * vb;
-		// 				//b.vel /= totalInvertMass;
-		// 			}
-		// 		}
-		// 	}
-		// }
+						// // bounce
+						// var BOUNCINESS = 1;//system conserves energy
+						// //var BOUNCINESS = 1.04; //system is gaining energy exponentially
+						// //var BOUNCINESS = 0.96; //system is losing energy exponentially
+						// var desiredDv = -BOUNCINESS * dv;
+						// var desiredDvChange = desiredDv - dv;
+						// //i modified below as more intuitive to me
+						// var imp = desiredDvChange / totalInvertMass;
+						// a.ApplyImpulse(-imp);
+						// b.ApplyImpulse(imp);
+					}
+				}
+			}
+		}
 	}
 
 	function render(framebuffer:Framebuffer):Void{
