@@ -4,7 +4,6 @@ import kha.Framebuffer;
 import kha.Scheduler;
 import kha.graphics2.Graphics;
 import kha.System;
-import js.html.URL;
 using kha.graphics2.GraphicsExtension;
 /*-----------------------------------------------------------------*/
 class Vec2{
