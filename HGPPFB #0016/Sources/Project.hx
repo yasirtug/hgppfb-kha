@@ -202,6 +202,7 @@ class Project{
 				}
 			}
 		}
+		//big circle inside collisions part
 		var outR = bigBody.r;
 		var i = n;
 		while(--i >= 0){
@@ -217,13 +218,13 @@ class Project{
 				
 				var movingTowardsEachOther = Vec2.dotP(normal, o.vel) < 0;
 				if(movingTowardsEachOther){//bounce
-                    var BOUNCINESS = 0.99; // [0, 1]
-                    var desiredDv = -BOUNCINESS * Vec2.dotP(o.vel, normal);
-                    var desiredDvChange = desiredDv - Vec2.dotP(o.vel, normal);
+					var BOUNCINESS = 0.99; // [0, 1]
+					var desiredDv = -BOUNCINESS * Vec2.dotP(o.vel, normal);
+					var desiredDvChange = desiredDv - Vec2.dotP(o.vel, normal);
 
-                    var totalInvMass = bigBody.invertMass + o.invertMass;
-                    var imp = desiredDvChange / totalInvMass;
-                    o.ApplyImpulse(Vec2.pro(normal, imp));
+					var totalInvMass = bigBody.invertMass + o.invertMass;
+					var imp = desiredDvChange / totalInvMass;
+					o.ApplyImpulse(Vec2.pro(normal, imp));
 					bigBody.ApplyImpulse(Vec2.pro(normal, -imp));
 				}
 			}
